@@ -16,7 +16,283 @@ wechat: V1.1.0
 
 将 wechat 包复制到 site-pakages 下
 
-## 二、API
+## 二、示例
+
+### 设置token
+
+方式一：
+
+```python
+from wechat import set_token
+
+
+set_token('xxx')
+```
+
+方式二：
+
+```python
+from wechat import Robot     # Robot 是一个机器人实例对象
+
+
+Robot.set_token('xxx')
+```
+
+方式三：
+
+```python
+from wechat import R        # R 是一个机器人类对象
+
+
+r = R()
+r.set_token('xxx')
+```
+
+### 查看token
+
+方式一：
+
+```python
+from wechat import Robot
+
+
+print(Robot.token)
+```
+
+方式二：
+
+```python
+from wechat import R
+
+
+r = R()
+print(r.token)
+```
+
+### 发送文本消息
+
+```python
+from wechat import Robot
+
+
+Robot.send_text('hello word')
+# @张三
+Robot.send_text('hello word'， mentioned_list=['zhangsan'])
+# @所有人
+Robot.send_text('hello word'， mentioned_list=['@all'])
+```
+
+### 发送图片消息
+
+```python
+from wechat import Robot
+
+
+Robot.send_image(path='D:\\a.png')
+
+# 传入Path路径也可以
+from pathlib import Path
+Robot.send_image(path=Path('D:\\a.png'))
+```
+
+### 发送Markdown消息
+
+```python
+from wechat import Robot
+
+
+Robot.send_markdown(content='**加粗hello world**')
+```
+
+### 发送文件消息
+
+```python
+from wechat import Robot
+
+
+Robot.send_image_text(
+    articles=[
+        {
+            "title": "标题",
+            "description": "中秋你快勒马",
+            "url": "www.qq.com",
+            "picurl": "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png"
+        },
+        {
+            "title": "标题2",
+            "description": "中秋你快勒马 11111111111",
+            "url": "www.baidu.com",
+            "picurl": "https://inews.gtimg.com/newsapp_ls/0/15237923582_640330/0"
+        }
+    ]
+)
+```
+
+### 发送图文消息
+
+```python
+from wechat import Robot
+
+
+Robot.send_file(path='D:\\a.csv')
+
+# 传入Path路径也可以
+from pathlib import Path
+Robot.send_file(path=Path('D:\\a.csv'))
+```
+
+### 发送模板卡片卡片
+
+```python
+from wechat import Robot
+
+
+Robot.send_text_card(
+    source={
+        "icon_url":"https://wework.qpic.cn/wwpic/252813_jOfDHtcISzuodLa_1629280209/0",
+        "desc":"企业微信",
+        "desc_color":0
+    },
+    main_title={
+        "title":"欢迎使用企业微信",
+        "desc":"您的好友正在邀请您加入企业微信"
+    },
+    emphasis_content={
+        "title":"100",
+        "desc":"数据含义"
+    },
+    quote_area={
+        "type":1,
+        "url":"https://work.weixin.qq.com/?from=openApi",
+        "appid":"APPID",
+        "pagepath":"PAGEPATH",
+        "title":"引用文本标题",
+        "quote_text":"Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
+    },
+    sub_title_text:"下载企业微信还能抢红包！",
+    horizontal_content_list=[
+        {
+            "keyname":"邀请人",
+            "value":"张三"
+        },
+        {
+            "keyname":"企微官网",
+            "value":"点击访问",
+            "type":1,
+            "url":"https://work.weixin.qq.com/?from=openApi"
+        },
+        {
+            "keyname":"企微下载",
+            "value":"企业微信.apk",
+            "type":2,
+            "media_id":"MEDIAID"
+        }
+    ],
+    jump_list=[
+        {
+            "type":1,
+            "url":"https://work.weixin.qq.com/?from=openApi",
+            "title":"企业微信官网"
+        },
+        {
+            "type":2,
+            "appid":"APPID",
+            "pagepath":"PAGEPATH",
+            "title":"跳转小程序"
+        }
+    ],
+    card_action{
+        "type":1,
+        "url":"https://work.weixin.qq.com/?from=openApi",
+        "appid":"APPID",
+        "pagepath":"PAGEPATH"
+    }
+)
+  
+```
+
+### 发送模板图片卡片
+
+```python
+from wechat import Robot
+
+
+Robot.send_image_card(
+    source={
+        "icon_url":"https://wework.qpic.cn/wwpic/252813_jOfDHtcISzuodLa_1629280209/0",
+        "desc":"企业微信",
+        "desc_color":0
+    },
+    main_title={
+        "title":"欢迎使用企业微信",
+        "desc":"您的好友正在邀请您加入企业微信"
+    },
+    card_image={
+        "url":"https://wework.qpic.cn/wwpic/354393_4zpkKXd7SrGMvfg_1629280616/0",
+        "aspect_ratio":2.25
+    },
+    image_text_area={
+        "type":1,
+        "url":"https://work.weixin.qq.com",
+        "title":"欢迎使用企业微信",
+        "desc":"您的好友正在邀请您加入企业微信",
+        "image_url":"https://wework.qpic.cn/wwpic/354393_4zpkKXd7SrGMvfg_1629280616/0"
+    },
+    quote_area={
+        "type":1,
+        "url":"https://work.weixin.qq.com/?from=openApi",
+        "appid":"APPID",
+        "pagepath":"PAGEPATH",
+        "title":"引用文本标题",
+        "quote_text":"Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
+    },
+    vertical_content_list=[
+        {
+            "title":"惊喜红包等你来拿",
+            "desc":"下载企业微信还能抢红包！"
+        }
+    ],
+    horizontal_content_list=[
+        {
+            "keyname":"邀请人",
+            "value":"张三"
+        },
+        {
+            "keyname":"企微官网",
+            "value":"点击访问",
+            "type":1,
+            "url":"https://work.weixin.qq.com/?from=openApi"
+        },
+        {
+            "keyname":"企微下载",
+            "value":"企业微信.apk",
+            "type":2,
+            "media_id":"MEDIAID"
+        }
+    ],
+    jump_list=[
+        {
+            "type":1,
+            "url":"https://work.weixin.qq.com/?from=openApi",
+            "title":"企业微信官网"
+        },
+        {
+            "type":2,
+            "appid":"APPID",
+            "pagepath":"PAGEPATH",
+            "title":"跳转小程序"
+        }
+    ],
+    card_action={
+        "type":1,
+        "url":"https://work.weixin.qq.com/?from=openApi",
+        "appid":"APPID",
+        "pagepath":"PAGEPATH"
+    }
+)
+```
+
+## 三、API
 
 ### wechat 模块API
 
@@ -475,281 +751,5 @@ card_action 嵌套字典参数
         "pagepath":"PAGEPATH"
     }
 }
-```
-
-## 三、示例
-
-### 设置token
-
-方式一：
-
-```python
-from wechat import set_token
-
-
-set_token('xxx')
-```
-
-方式二：
-
-```python
-from wechat import Robot     # Robot 是一个机器人实例对象
-
-
-Robot.set_token('xxx')
-```
-
-方式三：
-
-```python
-from wechat import R        # R 是一个机器人类对象
-
-
-r = R()
-r.set_token('xxx')
-```
-
-### 查看token
-
-方式一：
-
-```python
-from wechat import Robot
-
-
-print(Robot.token)
-```
-
-方式二：
-
-```python
-from wechat import R
-
-
-r = R()
-print(r.token)
-```
-
-### 发送文本消息
-
-```python
-from wechat import Robot
-
-
-Robot.send_text('hello word')
-# @张三
-Robot.send_text('hello word'， mentioned_list=['zhangsan'])
-# @所有人
-Robot.send_text('hello word'， mentioned_list=['@all'])
-```
-
-### 发送图片消息
-
-```python
-from wechat import Robot
-
-
-Robot.send_image(path='D:\\a.png')
-
-# 传入Path路径也可以
-from pathlib import Path
-Robot.send_image(path=Path('D:\\a.png'))
-```
-
-### 发送Markdown消息
-
-```python
-from wechat import Robot
-
-
-Robot.send_markdown(content='**加粗hello world**')
-```
-
-### 发送文件消息
-
-```python
-from wechat import Robot
-
-
-Robot.send_image_text(
-    articles=[
-        {
-            "title": "标题",
-            "description": "中秋你快勒马",
-            "url": "www.qq.com",
-            "picurl": "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png"
-        },
-        {
-            "title": "标题2",
-            "description": "中秋你快勒马 11111111111",
-            "url": "www.baidu.com",
-            "picurl": "https://inews.gtimg.com/newsapp_ls/0/15237923582_640330/0"
-        }
-    ]
-)
-```
-
-### 发送图文消息
-
-```python
-from wechat import Robot
-
-
-Robot.send_file(path='D:\\a.csv')
-
-# 传入Path路径也可以
-from pathlib import Path
-Robot.send_file(path=Path('D:\\a.csv'))
-```
-
-### 发送模板卡片卡片
-
-```python
-from wechat import Robot
-
-
-Robot.send_text_card(
-    source={
-        "icon_url":"https://wework.qpic.cn/wwpic/252813_jOfDHtcISzuodLa_1629280209/0",
-        "desc":"企业微信",
-        "desc_color":0
-    },
-    main_title={
-        "title":"欢迎使用企业微信",
-        "desc":"您的好友正在邀请您加入企业微信"
-    },
-    emphasis_content={
-        "title":"100",
-        "desc":"数据含义"
-    },
-    quote_area={
-        "type":1,
-        "url":"https://work.weixin.qq.com/?from=openApi",
-        "appid":"APPID",
-        "pagepath":"PAGEPATH",
-        "title":"引用文本标题",
-        "quote_text":"Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
-    },
-    sub_title_text:"下载企业微信还能抢红包！",
-    horizontal_content_list=[
-        {
-            "keyname":"邀请人",
-            "value":"张三"
-        },
-        {
-            "keyname":"企微官网",
-            "value":"点击访问",
-            "type":1,
-            "url":"https://work.weixin.qq.com/?from=openApi"
-        },
-        {
-            "keyname":"企微下载",
-            "value":"企业微信.apk",
-            "type":2,
-            "media_id":"MEDIAID"
-        }
-    ],
-    jump_list=[
-        {
-            "type":1,
-            "url":"https://work.weixin.qq.com/?from=openApi",
-            "title":"企业微信官网"
-        },
-        {
-            "type":2,
-            "appid":"APPID",
-            "pagepath":"PAGEPATH",
-            "title":"跳转小程序"
-        }
-    ],
-    card_action{
-        "type":1,
-        "url":"https://work.weixin.qq.com/?from=openApi",
-        "appid":"APPID",
-        "pagepath":"PAGEPATH"
-    }
-)
-  
-```
-
-### 发送模板图片卡片
-
-```python
-from wechat import Robot
-
-
-Robot.send_image_card(
-    source={
-        "icon_url":"https://wework.qpic.cn/wwpic/252813_jOfDHtcISzuodLa_1629280209/0",
-        "desc":"企业微信",
-        "desc_color":0
-    },
-    main_title={
-        "title":"欢迎使用企业微信",
-        "desc":"您的好友正在邀请您加入企业微信"
-    },
-    card_image={
-        "url":"https://wework.qpic.cn/wwpic/354393_4zpkKXd7SrGMvfg_1629280616/0",
-        "aspect_ratio":2.25
-    },
-    image_text_area={
-        "type":1,
-        "url":"https://work.weixin.qq.com",
-        "title":"欢迎使用企业微信",
-        "desc":"您的好友正在邀请您加入企业微信",
-        "image_url":"https://wework.qpic.cn/wwpic/354393_4zpkKXd7SrGMvfg_1629280616/0"
-    },
-    quote_area={
-        "type":1,
-        "url":"https://work.weixin.qq.com/?from=openApi",
-        "appid":"APPID",
-        "pagepath":"PAGEPATH",
-        "title":"引用文本标题",
-        "quote_text":"Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
-    },
-    vertical_content_list=[
-        {
-            "title":"惊喜红包等你来拿",
-            "desc":"下载企业微信还能抢红包！"
-        }
-    ],
-    horizontal_content_list=[
-        {
-            "keyname":"邀请人",
-            "value":"张三"
-        },
-        {
-            "keyname":"企微官网",
-            "value":"点击访问",
-            "type":1,
-            "url":"https://work.weixin.qq.com/?from=openApi"
-        },
-        {
-            "keyname":"企微下载",
-            "value":"企业微信.apk",
-            "type":2,
-            "media_id":"MEDIAID"
-        }
-    ],
-    jump_list=[
-        {
-            "type":1,
-            "url":"https://work.weixin.qq.com/?from=openApi",
-            "title":"企业微信官网"
-        },
-        {
-            "type":2,
-            "appid":"APPID",
-            "pagepath":"PAGEPATH",
-            "title":"跳转小程序"
-        }
-    ],
-    card_action={
-        "type":1,
-        "url":"https://work.weixin.qq.com/?from=openApi",
-        "appid":"APPID",
-        "pagepath":"PAGEPATH"
-    }
-)
 ```
 
