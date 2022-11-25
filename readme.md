@@ -31,6 +31,7 @@ wechat: V1.1.0
 from wechat import set_token
 
 
+# 机器人的token是webhook中的key参数
 set_token('xxx')
 ```
 
